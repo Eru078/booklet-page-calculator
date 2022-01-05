@@ -36,38 +36,47 @@ function calculate()
   
   switch(pagesPerSheet) {
   
+    // for 2 page per sheet booklet
     case '2':
-      // for 2 page per sheet booklet
-      document.getElementById('print-tip-doublesided-1').textContent = 
-      "Set your printer's \x22pages per side\x22 setting to 2.";
+      var pagesPerPaper = 4
+      var pageRemainder = count % pagesPerPaper
+      if (pageRemainder === 0) {
+        document.getElementById('print-tip-doublesided-1').textContent = 
+        "Set your printer's \x22pages per side\x22 setting to 2.";
+      
+        document.getElementById('print-tip-singlesided-1').textContent = 
+        "Set your printer's \x22pages per side\x22 setting to 2."
+      
+        for (var i = 1; i < count / 2; i = i + 2) {
+          var new1;
+          var new2;
+          if (direction == "LTR") {
+            var new1 = (count - i+1).toString() + ',' + i.toString() + ',';
+            var new2 = (i + 1).toString() + ',' + (count - i).toString() + ',';
+          }
+          else {
+            // RTL; this is the above two lines with each pair of numbers in the
+            // other order
+            var new1 = i.toString() + ',' + (count - i+1).toString() + ',';
+            var new2 = (count - i).toString() + ',' + (i + 1).toString() + ',';
+          }
+      
+          side1list = side1list + new1;
+          side2list = side2list + new2;
+          duplexlist = duplexlist + new1 + new2;
     
-      document.getElementById('print-tip-singlesided-1').textContent = 
-      "Set your printer's \x22pages per side\x22 setting to 2."
-    
-      for (var i = 1; i < count / 2; i = i + 2) {
-        var new1;
-        var new2;
-        if (direction == "LTR") {
-          var new1 = (count - i+1).toString() + ',' + i.toString() + ',';
-          var new2 = (i + 1).toString() + ',' + (count - i).toString() + ',';
         }
-        else {
-          // RTL; this is the above two lines with each pair of numbers in the
-          // other order
-          var new1 = i.toString() + ',' + (count - i+1).toString() + ',';
-          var new2 = (count - i).toString() + ',' + (i + 1).toString() + ',';
-        }
-    
-        side1list = side1list + new1;
-        side2list = side2list + new2;
-        duplexlist = duplexlist + new1 + new2;
-  
       }
-      break;
+      else {
+        side1list = "Not divisible by " + pagesPerPaper + ". Need " + (pagesPerPaper-pageRemainder) + " more page(s).,";
+        side2list = "";
+        duplexlist = "Not divisible by " + pagesPerPaper + ". Need " + (pagesPerPaper-pageRemainder) + " more page(s).,";
+      }
+    break;
   
     case '4':
-
-      var pageRemainder = count % 8
+      var pagesPerPaper = 8
+      var pageRemainder = count % pagesPerPaper
       if (pageRemainder === 0) {
         for (var i = 1; i < count / 4; i = i + 2) {
             var newside1;
@@ -93,9 +102,9 @@ function calculate()
         }
       }
       else {
-        side1list = "Not divisible by 8. Need " + pageRemainder + " more pages.,";
+        side1list = "Not divisible by " + pagesPerPaper + ". Need " + (pagesPerPaper-pageRemainder) + " more page(s).,";
         side2list = "";
-        duplexlist = "Not divisible by 8. Need " + pageRemainder + " more pages.,";
+        duplexlist = "Not divisible by " + pagesPerPaper + ". Need " + (pagesPerPaper-pageRemainder) + " more page(s).,";
       }
   
       break;
