@@ -101,19 +101,18 @@ function calculate()
             var newside1;
             var newside2;
             if (direction == "LTR") {
-              var newside1 = (count - i+1).toString()+',' +i.toString()+','  
-                             +(count- (count/4) -i+1 ).toString()+',' +(i+ (count/4) ).toString()+',';
-              console.log(newside1);
-              var newside2 = (i + 1).toString()+',' +(count - i).toString()+','
-                             +(i + 1 + (count/4)).toString()+',' +(count - i - (count/4)).toString()+',';
-              console.log(newside2);
+              var newside1 = (count - i+1).toString()+','    +i.toString()+','  
+                             +(count- (count/4) -i+1 ).toString()+','    +(i+ (count/4) ).toString()+',';
+              var newside2 = (i + 1).toString()+','    +(count - i).toString()+','
+                             +(i + 1 + (count/4)).toString()+','    +(count - i - (count/4)).toString()+',';
             }
             else {
               // RTL; this is the above two lines with each pair of numbers in the
               // other order
-              //var new1 = i.toString() + ',' + (count - i+1).toString() + ',';
-              //var new2 = (count - i).toString() + ',' + (i + 1).toString() + ',';
-              var new1, new2 = ""
+              var newside1 = i.toString()+','    +(count - i+1).toString()+','
+                             +(i+ (count/4) ).toString()+','    +(count- (count/4) -i+1 ).toString()+',';
+              var newside2 = (count - i).toString()+','    +(i + 1).toString()+','
+                             +(count - i - (count/4)).toString()+','    +(i + 1 + (count/4)).toString()+',';
             }
             
         side1list = side1list + newside1;
