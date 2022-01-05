@@ -33,43 +33,78 @@ function calculate()
   var side1list = '';
   var side2list = '';
 
-
-switch(pagesPerSheet) {
-
-  case '2':
-    // for 2 page per sheet booklet
-    document.getElementById('print-tip-doublesided-1').textContent = 
-    "Set your printer's \x22pages per side\x22 setting to 2.";
   
-    document.getElementById('print-tip-singlesided-1').textContent = 
-    "Set your printer's \x22pages per side\x22 setting to 2."
+  switch(pagesPerSheet) {
   
-    for (var i = 1; i < count / 2; i = i + 2) {
-      var new1;
-      var new2;
-      if (direction == "LTR") {
-        var new1 = (count - i+1).toString() + ',' + i.toString() + ',';
-        var new2 = (i + 1).toString() + ',' + (count - i).toString() + ',';
+    case '2':
+      // for 2 page per sheet booklet
+      document.getElementById('print-tip-doublesided-1').textContent = 
+      "Set your printer's \x22pages per side\x22 setting to 2.";
+    
+      document.getElementById('print-tip-singlesided-1').textContent = 
+      "Set your printer's \x22pages per side\x22 setting to 2."
+    
+      for (var i = 1; i < count / 2; i = i + 2) {
+        var new1;
+        var new2;
+        if (direction == "LTR") {
+          var new1 = (count - i+1).toString() + ',' + i.toString() + ',';
+          var new2 = (i + 1).toString() + ',' + (count - i).toString() + ',';
+        }
+        else {
+          // RTL; this is the above two lines with each pair of numbers in the
+          // other order
+          var new1 = i.toString() + ',' + (count - i+1).toString() + ',';
+          var new2 = (count - i).toString() + ',' + (i + 1).toString() + ',';
+        }
+    
+        side1list = side1list + new1;
+        side2list = side2list + new2;
+        duplexlist = duplexlist + new1 + new2;
+  
+      }
+      break;
+  
+    case '4':
+
+      var pageRemainder = count % 8
+      if (pageRemainder === 0) {
+        for (var i = 1; i < count / 4; i = i + 2) {
+            var newside1;
+            var newside2;
+            if (direction == "LTR") {
+              var newside1 = (count - i+1).toString()+',' +i.toString()+','  
+                             +(count- (count/4) -i+1 ).toString()+',' +(i+ (count/4) ).toString()+',';
+              console.log(newside1);
+              var newside2 = (i + 1).toString()+',' +(count - i).toString()+','
+                             +(i + 1 + (count/4)).toString()+',' +(count - i - (count/4)).toString()+',';
+              console.log(newside2);
+            }
+            else {
+              // RTL; this is the above two lines with each pair of numbers in the
+              // other order
+              //var new1 = i.toString() + ',' + (count - i+1).toString() + ',';
+              //var new2 = (count - i).toString() + ',' + (i + 1).toString() + ',';
+            }
+            
+        side1list = side1list + newside1;
+        side2list = side2list + newside2;
+        duplexlist = duplexlist + new1 + new2;
+        }
       }
       else {
-        // RTL; this is the above two lines with each pair of numbers in the
-        // other order
-        var new1 = i.toString() + ',' + (count - i+1).toString() + ',';
-        var new2 = (count - i).toString() + ',' + (i + 1).toString() + ',';
+        side1list = "Not divisible by 8. Need " + pageRemainder + " more pages.,";
+        side2list = "";
+        duplexlist = "Not divisible by 8. Need " + pageRemainder + " more pages.,";
       }
   
-      side1list = side1list + new1;
-      side2list = side2list + new2;
-      duplexlist = duplexlist + new1 + new2;
-
+      break;
+  
+    default: 
       break;
     }
-
-  default: 
-    break;
-  }
-
-
+  
+  
   // delete last comma
   side1list = side1list.substr(0, side1list.length - 1);
   side2list = side2list.substr(0, side2list.length - 1);
