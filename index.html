@@ -12,9 +12,11 @@
 
 function calculate()
 {
+  // set options to variables
   duplex = document.getElementById('duplex').value;
   direction = document.getElementById('direction').value;
 
+  // show different elements based on duplex option
   if (duplex == "Yes") {
     document.getElementById("doublesided").style.display = "block";
     document.getElementById("singlesided").style.display = "none";
@@ -24,6 +26,7 @@ function calculate()
     document.getElementById("singlesided").style.display = "block";
   }
 
+  // set option to variable
   count = document.getElementById('count').value;
   var duplexlist = '';
   var side1list = '';
@@ -140,6 +143,8 @@ document.addEventListener("DOMContentLoaded", init);
         </div>
         <div class="col-md-6">
           <h3>Printing</h3>
+
+          
           <ul class="list-group" id="doublesided">
             <li class="list-group-item">Set your printer's "pages per side" setting to 2.</li>
             <li class="list-group-item">Set your printer's "2-sided" (duplex) setting to "Short Edge", "Short Edge Binding", "Flip" or similar.
@@ -152,6 +157,7 @@ document.addEventListener("DOMContentLoaded", init);
               </div>
             </li>
           </ul>
+
           <ul class="list-group" id="singlesided">
             <li class="list-group-item">Set your printer's "pages per side" setting to 2.</li>
             <li class="list-group-item">Print these pages first: 
@@ -172,6 +178,8 @@ document.addEventListener("DOMContentLoaded", init);
               </div>
             </li>
           </ul>
+
+
         </div>
       </div>
     </form>
