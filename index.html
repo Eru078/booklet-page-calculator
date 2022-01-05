@@ -48,21 +48,21 @@ function calculate()
         "Set your printer's \x22pages per side\x22 setting to 2."
       
         for (var i = 1; i < count / 2; i = i + 2) {
-          var new1;
-          var new2;
+          var newside1;
+          var newside2;
           if (direction == "LTR") {
-            var new1 = (count - i+1).toString() + ',' + i.toString() + ',';
-            var new2 = (i + 1).toString() + ',' + (count - i).toString() + ',';
+            var newside1 = (count - i+1).toString() + ',' + i.toString() + ',';
+            var newside2 = (i + 1).toString() + ',' + (count - i).toString() + ',';
           }
           else {
             // RTL; this is the above two lines with each pair of numbers in the
             // other order
-            var new1 = i.toString() + ',' + (count - i+1).toString() + ',';
-            var new2 = (count - i).toString() + ',' + (i + 1).toString() + ',';
+            var newside1 = i.toString() + ',' + (count - i+1).toString() + ',';
+            var newside2 = (count - i).toString() + ',' + (i + 1).toString() + ',';
           }
       
-          side1list = side1list + new1;
-          side2list = side2list + new2;
+          side1list = side1list + newside1;
+          side2list = side2list + newside2;
           duplexlist = duplexlist + newside1 + newside2;
     
         }
