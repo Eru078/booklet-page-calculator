@@ -200,16 +200,16 @@ document.addEventListener("DOMContentLoaded", init);
             <!-- adding option to specify how many pages per sheet-->
             <li class="list-group-item"> 
               How many pages do you want to print per sheet?
-              <select  id="pageMode" onchange="calculate();">
+              <select id="pageMode" onchange="calculate();">
                 <option value="2">2 pages</option>
-                <option value="4">4 pages</option>
+                <option value="4" selected>4 pages</option>
               </select>
             </li>
 
             <li class="list-group-item" id='prep-tip-1'>Make sure your document's page count is <b>divisible by </b><b id='prep-tip-1-1'>4</b>, i.e. it contains <i id='prep-tip-1-2'>4 or 8 or 12 or</i> ... pages. If not, add empty pages.</li>
             <li class="list-group-item">
               Enter the page count of your document:
-              <input type="text" size="4" id="count" value="8" onchange="calculate();"/>
+              <input type="text" size="4" id="count" value="16" onchange="calculate();"/>
             </li>
             <li class="list-group-item"> 
               Does your printer print double-sided?
