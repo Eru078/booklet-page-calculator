@@ -15,7 +15,7 @@ function calculate()
   // set options to variables
   duplex = document.getElementById('duplex').value;
   direction = document.getElementById('direction').value;
-  pagesPerSheet = document.getElementById('pagesPerSheet').value;
+  pageMode = document.getElementById('pageMode').value;
 
   // show different elements based on duplex option
   if (duplex == "Yes") {
@@ -34,19 +34,24 @@ function calculate()
   var side2list = '';
 
   
-  switch(pagesPerSheet) {
+  switch(pageMode) {
   
     // for 2 page per sheet booklet
     case '2':
       var pagesPerPaper = 4
       var pageRemainder = count % pagesPerPaper
+      document.getElementById('prep-tip-1-1').textContent = pagesPerPaper.toString();
+      document.getElementById('prep-tip-1-2').textContent = "4 or 8 or 12 or";
+
+      var printTip1 = "Set your printer's \x22pages per side\x22 setting to " + (pagesPerPaper/2) + ".";
+      document.getElementById('print-tip-doublesided-1').textContent = printTip1;
+      document.getElementById('print-tip-singlesided-1').textContent = printTip1;
+
+      var printTip10 = "Fold to create your booklet!"
+      document.getElementById('print-tip-doublesided-10').textContent = printTip10;
+      document.getElementById('print-tip-singlesided-10').textContent = printTip10;
       if (pageRemainder === 0) {
-        document.getElementById('print-tip-doublesided-1').textContent = 
-        "Set your printer's \x22pages per side\x22 setting to 2.";
-      
-        document.getElementById('print-tip-singlesided-1').textContent = 
-        "Set your printer's \x22pages per side\x22 setting to 2."
-      
+
         for (var i = 1; i < count / 2; i = i + 2) {
           var newside1;
           var newside2;
@@ -77,6 +82,20 @@ function calculate()
     case '4':
       var pagesPerPaper = 8
       var pageRemainder = count % pagesPerPaper
+      document.getElementById('prep-tip-1-1').textContent = pagesPerPaper.toString();
+      document.getElementById('prep-tip-1-2').textContent = "8 or 16 or 24 or";
+
+      var printTip1 = "Set your printer's \x22pages per side\x22 setting to " + (pagesPerPaper/2) + ".";
+      document.getElementById('print-tip-doublesided-1').textContent = printTip1;
+      document.getElementById('print-tip-singlesided-1').textContent = printTip1;
+
+      
+      var printTip10single = "Flip the pile so that the first page is facing up. Cut the pages in the middle horizontally to create a top and bottom pile. Place the top pile on top of the bottom pile then fold!";
+      var printTip10double = "Cut the pages in the middle horizontally to create a top and bottom pile. Place the top pile on top of the bottom pile then fold!";
+      document.getElementById('print-tip-doublesided-10').textContent = printTip10double;
+      document.getElementById('print-tip-singlesided-10').textContent = printTip10single;
+      
+      
       if (pageRemainder === 0) {
         for (var i = 1; i < count / 4; i = i + 2) {
             var newside1;
@@ -94,6 +113,7 @@ function calculate()
               // other order
               //var new1 = i.toString() + ',' + (count - i+1).toString() + ',';
               //var new2 = (count - i).toString() + ',' + (i + 1).toString() + ',';
+              var new1, new2 = ""
             }
             
         side1list = side1list + newside1;
@@ -181,13 +201,13 @@ document.addEventListener("DOMContentLoaded", init);
             <!-- adding option to specify how many pages per sheet-->
             <li class="list-group-item"> 
               How many pages do you want to print per sheet?
-              <select  id="pagesPerSheet" onchange="calculate();">
+              <select  id="pageMode" onchange="calculate();">
                 <option value="2">2 pages</option>
                 <option value="4">4 pages</option>
               </select>
             </li>
 
-            <li class="list-group-item">Make sure your document's page count is <b>divisible by 4</b>, i.e. it contains 4 or 8 or 12 or ... pages. If not, add empty pages.</li>
+            <li class="list-group-item" id='prep-tip-1'>Make sure your document's page count is <b>divisible by </b><b id='prep-tip-1-1'>4</b>, i.e. it contains <i id='prep-tip-1-2'>4 or 8 or 12 or</i> ... pages. If not, add empty pages.</li>
             <li class="list-group-item">
               Enter the page count of your document:
               <input type="text" size="4" id="count" value="8" onchange="calculate();"/>
@@ -200,10 +220,10 @@ document.addEventListener("DOMContentLoaded", init);
               </select>
             </li>
             <li class="list-group-item">
-              Is the language read left-to-right (usual) or right-to-left (Hebrew, Farsi etc.)?
+              Is the language read left-to-right (common) or right-to-left (Arabic, Hebrew, Farsi etc.)?
               <select id="direction" onchange="calculate();">
-                <option value="LTR">Left-to-right (usual)</option>
-                <option value="RTL">Right-to-left (unusual)</option>
+                <option value="LTR">Left-to-right</option>
+                <option value="RTL">Right-to-left</option>
               </select>
             </li>
           </ul>
@@ -214,7 +234,7 @@ document.addEventListener("DOMContentLoaded", init);
           <!-- double sided output -->
           <ul class="list-group" id="doublesided">
             <li class="list-group-item" id="print-tip-doublesided-1"> &nbsp; </li>
-            <li class="list-group-item" id="print-tip-doublesided-2">Set your printer's "2-sided" (duplex) setting to "Short Edge", "Short Edge Binding", "Flip" or similar.
+            <li class="list-group-item" id="print-tip-doublesided-2">Set your printer's "2-sided" (duplex) setting to either "Short Edge" or "Long Edge" or similar, depending on page orientation.
             <li class="list-group-item" id="print-tip-doublesided-3">Print pages in this order: 
               <div class="input-group">  
                 <input class="form-control" type="text" id="duplexlist" size="50" /> 
@@ -222,6 +242,9 @@ document.addEventListener("DOMContentLoaded", init);
                   <button onclick="copyToClipboard('duplexlist');" title="Copy to clipboard" class="btn btn-info" type="button"><i class="fa fa-clone"></i></button>
                 </span>
               </div>
+            </li>
+            <li class="list-group-item" id="print-tip-doublesided-10">
+              &nbsp;
             </li>
           </ul>
 
@@ -244,6 +267,9 @@ document.addEventListener("DOMContentLoaded", init);
                   <button onclick="copyToClipboard('side2list');" title="Copy to clipboard" class="btn btn-info" type="button"><i class="fa fa-clone"></i></button>
                 </span>
               </div>
+            </li>
+            <li class="list-group-item" id="print-tip-singlesided-10">
+              &nbsp;
             </li>
           </ul>
 
