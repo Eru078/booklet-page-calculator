@@ -127,6 +127,108 @@ function calculate()
       }
   
       break;
+
+    case '6':
+  var pagesPerPaper = 12;
+  var pageRemainder = count % pagesPerPaper;
+  document.getElementById('prep-tip-1-1').textContent = pagesPerPaper.toString();
+  document.getElementById('prep-tip-1-2').textContent = "12 or 24 or 36 or";
+  var printTip1 = "Set your printer's \"pages per side\" setting to 6.";
+  document.getElementById('print-tip-doublesided-1').textContent = printTip1;
+  document.getElementById('print-tip-singlesided-1').textContent = printTip1;
+  var printTip10 = "Fold to create your booklet!";
+  document.getElementById('print-tip-doublesided-10').textContent = printTip10;
+  document.getElementById('print-tip-singlesided-10').textContent = printTip10;
+  if (pageRemainder === 0) {
+    for (var i = 0; i < count / pagesPerPaper; i++) {
+      var base = i * pagesPerPaper;
+      var side1, side2;
+      if (direction == "LTR") {
+        side1 = [
+          count - base - 0, base + 1,
+          count - base - 1, base + 2,
+          count - base - 2, base + 3
+        ].join(',') + ',';
+        side2 = [
+          base + 4, count - base - 3,
+          base + 5, count - base - 4,
+          base + 6, count - base - 5
+        ].join(',') + ',';
+      } else {
+        side1 = [
+          base + 1, count - base - 0,
+          base + 2, count - base - 1,
+          base + 3, count - base - 2
+        ].join(',') + ',';
+        side2 = [
+          count - base - 3, base + 4,
+          count - base - 4, base + 5,
+          count - base - 5, base + 6
+        ].join(',') + ',';
+      }
+      side1list += side1;
+      side2list += side2;
+      duplexlist += side1 + side2;
+    }
+  } else {
+    side1list = "Not divisible by " + pagesPerPaper + ". Need " + (pagesPerPaper - pageRemainder) + " more page(s).,";
+    side2list = "";
+    duplexlist = side1list;
+  }
+  break;
+
+case '8':
+  var pagesPerPaper = 16;
+  var pageRemainder = count % pagesPerPaper;
+  document.getElementById('prep-tip-1-1').textContent = pagesPerPaper.toString();
+  document.getElementById('prep-tip-1-2').textContent = "16 or 32 or 48 or";
+  var printTip1 = "Set your printer's \"pages per side\" setting to 8.";
+  document.getElementById('print-tip-doublesided-1').textContent = printTip1;
+  document.getElementById('print-tip-singlesided-1').textContent = printTip1;
+  var printTip10 = "Fold to create your booklet!";
+  document.getElementById('print-tip-doublesided-10').textContent = printTip10;
+  document.getElementById('print-tip-singlesided-10').textContent = printTip10;
+  if (pageRemainder === 0) {
+    for (var i = 0; i < count / pagesPerPaper; i++) {
+      var base = i * pagesPerPaper;
+      var side1, side2;
+      if (direction == "LTR") {
+        side1 = [
+          count - base - 0, base + 1,
+          count - base - 1, base + 2,
+          count - base - 2, base + 3,
+          count - base - 3, base + 4
+        ].join(',') + ',';
+        side2 = [
+          base + 5, count - base - 4,
+          base + 6, count - base - 5,
+          base + 7, count - base - 6,
+          base + 8, count - base - 7
+        ].join(',') + ',';
+      } else {
+        side1 = [
+          base + 1, count - base - 0,
+          base + 2, count - base - 1,
+          base + 3, count - base - 2,
+          base + 4, count - base - 3
+        ].join(',') + ',';
+        side2 = [
+          count - base - 4, base + 5,
+          count - base - 5, base + 6,
+          count - base - 6, base + 7,
+          count - base - 7, base + 8
+        ].join(',') + ',';
+      }
+      side1list += side1;
+      side2list += side2;
+      duplexlist += side1 + side2;
+    }
+  } else {
+    side1list = "Not divisible by " + pagesPerPaper + ". Need " + (pagesPerPaper - pageRemainder) + " more page(s).,";
+    side2list = "";
+    duplexlist = side1list;
+  }
+  break;
   
     default: 
       break;
@@ -186,7 +288,7 @@ document.addEventListener("DOMContentLoaded", init);
     <div class="container">
       <h2>Booklet Printing</h2>
 
-      <p>Print 2 or 4 pages per sheet. You can print booklets with your regular printer without installing any
+      <p>Print 2, 4, 6 or 8 pages per sheet. You can print booklets with your regular printer without installing any
           extra plugins, and even if your software does not have booklet support.</p>
     </div>
   </div>
@@ -203,6 +305,8 @@ document.addEventListener("DOMContentLoaded", init);
               <select id="pageMode" onchange="calculate();">
                 <option value="2">2 pages</option>
                 <option value="4" selected>4 pages</option>
+                <option value="6">6 pages</option>
+                <option value="8">8 pages</option>
               </select>
             </li>
 
